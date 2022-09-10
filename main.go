@@ -107,12 +107,7 @@ func main() {
 
 		httpProxy := proxy.NewUpgradeAwareHandler(&s, t, true, false, nil)
 		httpProxy.UpgradeTransport = proxy.NewUpgradeRequestRoundTripper(t, t)
-
-		c.JSON(http.StatusOK, gin.H{
-			"code":    20000, // 20000 的返回值表示正常，其他表示错误
-			"message": "success",
-			"data":    "",
-		})
+		httpProxy.ServeHTTP(c.Writer, c.Request)
 	})
 
 	// 指定指定方法
